@@ -1,3 +1,4 @@
+open Syntax
 
 let expr_of_file f = 
   Parser.expr Lexer.token (Lexing.from_channel (open_in f))
@@ -16,6 +17,8 @@ let exec_string s =
   with exn -> "ML error: "^(Printexc.to_string exn)
 
 let _ =
-  let src = "let add = fun x -> fun y -> y in add 2 3" in
-    try Printf.printf "ML result: %s \n" (exec_string src)
-    with _ -> ()
+  let src = "let add = fun x -> fun y -> x + y in add 4 3" in
+    let p  = (Evaluator.eval Prelude.env (expr_of_string src))
+    in print_endline (Syntax.string_of_value p)
+    (* try Printf.printf "ML result: %s \n" (exec_string src) *)
+    (* with _ -> () *)

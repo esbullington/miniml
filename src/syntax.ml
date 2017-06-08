@@ -14,11 +14,13 @@ type expr =
 | LetRec of string * expr * expr
 	
 type value =  
-  Int of int		
-| Bool of bool          
-| Closure of env * string option * string * expr 
-| Empty                    
-| Pair of value * value     
+    Int of int		
+  | Bool of bool          
+  | Closure of env * string option * string * expr 
+  | Empty                    
+  | Pair of value * value     
+  | MonadV of (dnval lazy_t -> dnval)
+and dnval = value
 
 and env = (string * value) list
 
@@ -35,6 +37,7 @@ let rec string_of_value v =
       Printf.sprintf "(%s::%s)" (string_of_value v1) (string_of_value v2) 
   | Empty -> 
       "[]"
+  | MonadV (_) -> "<MonadV>"
 
 and string_of_env evn =
   let xs = List.map (fun (x,v) -> Printf.sprintf "%s:%s" x (string_of_value v)) evn in
