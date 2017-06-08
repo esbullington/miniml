@@ -63,7 +63,7 @@ app_expr: app_expr prim_expr { App($1,$2) }
     | prim_expr              { $1 }
 
 prim_expr: LPAREN expr RPAREN  { $2 }   
-    | INT                      { Const $1 }
-    | TRUE                     { True }
-    | FALSE                    { False }
+    | INT                      { NumLit $1 }
+    | TRUE                     { BoolLit true }
+    | FALSE                    { BoolLit false }
     | IDENT                    { Var($1) }

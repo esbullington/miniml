@@ -2,9 +2,8 @@ exception ParserError of string
 exception LexerError of string
 
 type expr =   
-  Const of int 
-| True   
-| False      
+  NumLit of int 
+| BoolLit of bool
 | EmptyExpr
 | Var of string    
 | If  of expr * expr * expr
@@ -45,12 +44,10 @@ and string_of_env evn =
 
 and string_of_expr e =
   match e with
-      Const i ->
-        Printf.sprintf "Const(%d)" i
-    | True -> 
-        "True" 
-    | False -> 
-        "False"
+      NumLit i ->
+        Printf.sprintf "NumLit(%d)" i
+    | BoolLit b ->
+        Printf.sprintf "BoolLit(%b)" b
     | EmptyExpr -> 
         "EmptyExpr"
     | Var x -> 

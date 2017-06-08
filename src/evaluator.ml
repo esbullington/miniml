@@ -16,9 +16,10 @@ let process_closure eval env _ b c = match eval env b with
   | _ -> assert false
 
 let rec eval env = function
-  | Const i -> Int i
-  | True -> Bool true
-  | False -> Bool false
+  | NumLit i -> Int i
+  | BoolLit b -> (match b with
+    | true -> Bool true
+    | false -> Bool false)
   | EmptyExpr -> Empty
   | Var x -> lookup x env
   | If (cond, consequent, alternative) -> if (eval env cond) = (Bool true) then (eval env consequent) else (eval env alternative)
